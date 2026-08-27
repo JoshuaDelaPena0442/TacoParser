@@ -8,37 +8,36 @@ namespace LoggingKata.Test
         [Fact]
         public void ShouldReturnNonNullObject()
         {
-            //Arrange
             var tacoParser = new TacoParser();
-
-            //Act
             var actual = tacoParser.Parse("34.073638, -84.677017, Taco Bell Acwort...");
-
-            //Assert
             Assert.NotNull(actual);
-
         }
 
         [Theory]
         [InlineData("34.073638, -84.677017, Taco Bell Acwort...", -84.677017)]
-        //Add additional inline data. Refer to your CSV file.
+        [InlineData("33.470013,-86.816966,Taco Bell Birmingham...", -86.816966)]
+        [InlineData("34.8831,-84.293899,Taco Bell Blue Ridg...", -84.293899)]
+        [InlineData("34.201107,-86.151229,Taco Bell Boa...", -86.151229)]
+        [InlineData("34.095209,-84.011894,Taco Bell Bufor...", -84.011894)]
         public void ShouldParseLongitude(string line, double expected)
         {
-            // TODO: Complete the test with Arrange, Act, Assert steps below.
-            //       Note: "line" string represents input data we will Parse 
-            //       to extract the Longitude.  
-            //       Each "line" from your .csv file
-            //       represents a TacoBell location
-
-            //Arrange
-
-            //Act
-
-            //Assert
+            var tacoParserInstance = new TacoParser();
+            var actual = tacoParserInstance.Parse(line);
+            Assert.Equal(expected, actual.Location.Longitude);
         }
 
+        [Theory]
+        [InlineData("34.018008,-86.079099,Taco Bell Attall...", 34.018008)]
+        [InlineData("32.555148,-84.946447,Taco Bell Columbus/1...", 32.555148)]
+        [InlineData("32.425341,-84.948505,Taco Bell Columbus/1...", 32.425341)]
+        [InlineData("32.484926,-84.935962,Taco Bell Columbus...", 32.484926)]
+        [InlineData("33.648244,-84.011856,Taco Bell Conyers...", 33.648244)]
 
-        //TODO: Create a test called ShouldParseLatitude
-
+        public void ShouldParseLatitude(string line, double expected)
+        {
+            var tacoParserInstance = new TacoParser();
+            var actual = tacoParserInstance.Parse(line);
+            Assert.Equal(expected, actual.Location.Latitude);
+        }
     }
 }
